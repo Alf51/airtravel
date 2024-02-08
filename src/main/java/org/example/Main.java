@@ -45,8 +45,8 @@ public class Main {
             boolean isFlightBetweenDestinationAndOrigin = ticket.getDestination().equals(origin) && ticket.getOrigin().equals(destination);
 
             if (isFlightBetweenOriginAndDestination || isFlightBetweenDestinationAndOrigin) {
-                LocalDateTime departureDateTime = LocalDateTime.of(ticket.getDeparture_date(), ticket.getDeparture_time());
-                LocalDateTime arrivalDateTime = LocalDateTime.of(ticket.getArrival_date(), ticket.getArrival_time());
+                LocalDateTime departureDateTime = LocalDateTime.of(ticket.getDepartureDate(), ticket.getDepartureTime());
+                LocalDateTime arrivalDateTime = LocalDateTime.of(ticket.getArrivalDate(), ticket.getArrivalTime());
                 Duration duration = Duration.between(departureDateTime, arrivalDateTime);
                 String carrier = ticket.getCarrier();
 
