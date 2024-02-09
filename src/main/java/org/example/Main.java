@@ -27,7 +27,11 @@ public class Main {
             //Выводим минимальное время полета между городами Владивосток и Тель-Авив для каждого авиаперевозчика
             minFlightTimeBetweenCitizen.forEach((carrier, duration) -> System.out.println("Carrier: " + carrier + ", Duration: " + duration.toMinutes() + " minute"));
 
-            List<Double> priceList = ticketList.stream().map(Ticket::getPrice).collect(Collectors.toCollection(ArrayList::new));
+            //Считаем разницу между средней ценой и медианой для полета между городами  Владивосток и Тель-Авив
+            List<Double> priceList = ticketList.stream()
+                    .filter(ticket -> (ticket.getOrigin().equals("VVO") && ticket.getDestination().equals("TLV"))
+                            || (ticket.getOrigin().equals("TLV") && ticket.getDestination().equals("VVO")))
+                    .map(Ticket::getPrice).collect(Collectors.toCollection(ArrayList::new));
             System.out.println("Разницу между средней ценой  и медианой:  " + getDifferencePriceBetweenAverageAndMedian(priceList));
         } catch (IOException e) {
             e.printStackTrace();
