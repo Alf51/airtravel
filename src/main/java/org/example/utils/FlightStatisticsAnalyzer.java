@@ -28,12 +28,12 @@ public class FlightStatisticsAnalyzer {
     }
 
     private static Double getMedian(List<Double> values) {
+        if (values.isEmpty()) {
+            return 0.0;
+        }
+
         Collections.sort(values);
         int middle = values.size() / 2;
-        if (values.size() % 2 == 1) {
-            return values.get(middle);
-        } else {
-            return (values.get(middle - 1) + values.get(middle)) / 2.0;
-        }
+        return values.size() % 2 == 1 ? values.get(middle) : Double.valueOf((values.get(middle - 1) + values.get(middle)) / 2.0);
     }
 }
