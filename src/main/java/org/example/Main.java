@@ -1,12 +1,7 @@
 package org.example;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.example.model.Ticket;
-import org.example.model.TicketList;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
