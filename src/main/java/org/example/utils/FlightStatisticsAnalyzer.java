@@ -13,21 +13,16 @@ public class FlightStatisticsAnalyzer {
         return Math.abs(averagePrice - medianPrice);
     }
 
-    public static Map<String, Duration> getMinFlightTimeBetweenCitizen(List<Ticket> ticketList, String origin, String destination) {
+    public static Map<String, Duration> getMinFlightTimeBetweenCitizen(List<Ticket> ticketList) {
         Map<String, Duration> minFlightTimeBetweenCitizen = new HashMap<>();
         for (Ticket ticket : ticketList) {
-            boolean isFlightBetweenOriginAndDestination = ticket.getOrigin().equals(origin) && ticket.getDestination().equals(destination);
-            boolean isFlightBetweenDestinationAndOrigin = ticket.getDestination().equals(origin) && ticket.getOrigin().equals(destination);
+            LocalDateTime departureDateTime = LocalDateTime.of(ticket.getDepartureDate(), ticket.getDepartureTime());
+            LocalDateTime arrivalDateTime = LocalDateTime.of(ticket.getArrivalDate(), ticket.getArrivalTime());
+            Duration duration = Duration.between(departureDateTime, arrivalDateTime);
+            String carrier = ticket.getCarrier();
 
-            if (isFlightBetweenOriginAndDestination || isFlightBetweenDestinationAndOrigin) {
-                LocalDateTime departureDateTime = LocalDateTime.of(ticket.getDepartureDate(), ticket.getDepartureTime());
-                LocalDateTime arrivalDateTime = LocalDateTime.of(ticket.getArrivalDate(), ticket.getArrivalTime());
-                Duration duration = Duration.between(departureDateTime, arrivalDateTime);
-                String carrier = ticket.getCarrier();
-
-                minFlightTimeBetweenCitizen.computeIfPresent(carrier, (key, currentDuration) -> duration.compareTo(currentDuration) < 0 ? duration : currentDuration);
-                minFlightTimeBetweenCitizen.computeIfAbsent(carrier, key -> duration);
-            }
+            minFlightTimeBetweenCitizen.computeIfPresent(carrier, (key, currentDuration) -> duration.compareTo(currentDuration) < 0 ? duration : currentDuration);
+            minFlightTimeBetweenCitizen.computeIfAbsent(carrier, key -> duration);
         }
         return minFlightTimeBetweenCitizen;
     }
